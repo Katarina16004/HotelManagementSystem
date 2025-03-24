@@ -8,4 +8,14 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Resources\otvoreno_oko.png" />
+    <None Remove="Resources\zatvoreno_oko.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\otvoreno_oko.png" />
+    <Resource Include="Resources\zatvoreno_oko.png" />
+  </ItemGroup>
+
 </Project>
