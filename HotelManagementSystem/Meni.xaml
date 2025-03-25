@@ -66,7 +66,60 @@
             </TabItem>
 
             <TabItem Header="Sobe">
-                <TextBlock Text="Rooms Content" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" Foreground="Black"/>
+                <Grid Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Tip sobe" VerticalAlignment="Center" />
+                        <StackPanel Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <CheckBox x:Name="CheckBox_jednokrevetna">Jednokrevetna</CheckBox>
+                            <CheckBox x:Name="CheckBox_dvokrevetna">Dvokrevetna</CheckBox>
+                            <CheckBox x:Name="CheckBox_trokrevetna">Trokrevetna</CheckBox>
+                        </StackPanel>
+                        <TextBlock Grid.Column="2" Text="Sprat" VerticalAlignment="Center" />
+                        <StackPanel Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <CheckBox x:Name="CheckBox_prizemlje">Prizemlje</CheckBox>
+                            <CheckBox x:Name="CheckBox_prviSprat">Prvi sprat</CheckBox>
+                            <CheckBox x:Name="CheckBox_drugiSprat">Drugi sprat</CheckBox>
+                            <CheckBox x:Name="CheckBox_treciSprat">Treći sprat</CheckBox>
+                            <CheckBox x:Name="CheckBox_cetvrtiSprat">Četvrti sprat</CheckBox>
+                            <CheckBox x:Name="CheckBox_petiSprat">Peti sprat</CheckBox>
+                        </StackPanel>
+
+                        <TextBlock Grid.Row="1" Text="Početak rezervacije " VerticalAlignment="Center" />
+                        <DatePicker x:Name="DatePicker_pocetak" Grid.Row="1" Grid.Column="1" Width="150" HorizontalAlignment="Left" Margin="5" />
+                        <TextBlock Grid.Row="1" Grid.Column="2" Text="Kraj rezervacije " VerticalAlignment="Center" />
+                        <DatePicker x:Name="DatePicker_kraj" Grid.Row="1" Grid.Column="3" Width="150" HorizontalAlignment="Left" Margin="5" />
+
+                        <Button x:Name="Button_pretraziSobu" Grid.Row="2" Grid.ColumnSpan="4" HorizontalAlignment="Center" Style="{StaticResource ModernButton}">Pretraži</Button>
+                    </Grid>
+
+                    <DataGrid Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Broj sobe" Width="*" />
+                            <DataGridTextColumn Header="Tip sobe" Width="*" />
+                            <DataGridTextColumn Header="Sprat"  Width="*" />
+                            <DataGridTextColumn Header="Dostupnost" Width="*" />
+                            <DataGridTextColumn Header="Cena po noći" Width="*" />
+                            <DataGridTextColumn Header="Napomena" Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </TabItem>
             
             <TabItem Header="Gosti">
@@ -79,10 +132,10 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                        <Button x:Name="Button_dodaj" Content="Dodaj" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
-                        <Button x:Name="Button_pretrazi" Content="Pretraži" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
-                        <Button x:Name="Button_izmeni" Content="Izmeni" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
-                        <Button x:Name="Button_obrisi" Content="Obriši" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
+                        <Button x:Name="Button_dodajGosta" Content="Dodaj" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
+                        <Button x:Name="Button_pretraziGosta" Content="Pretraži" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
+                        <Button x:Name="Button_izmeniGosta" Content="Izmeni" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
+                        <Button x:Name="Button_obrisiGosta" Content="Obriši" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
                     </StackPanel>
 
                     <Grid Grid.Row="1">
