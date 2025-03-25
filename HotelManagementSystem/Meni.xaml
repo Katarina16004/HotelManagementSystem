@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HotelManagementSystem"
         mc:Ignorable="d"
-        Title="Meni" Height="450" Width="800">
+        Title="Meni" WindowState="Maximized">
     <Window.Resources>
         
         <Style TargetType="TabItem">
@@ -30,26 +30,58 @@
         </Grid.RowDefinitions>
 
         <TabControl Grid.Row="1" TabStripPlacement="Left" >
-            
+
             <TabItem Header="Dashboard">
-                <TextBlock Grid.Column="1" Grid.Row="1" Text="Dashboard Content" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" Foreground="Black"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
+                        <Border BorderThickness="2" BorderBrush="#617C58" Background="#99C68E" Padding="20" CornerRadius="10" Margin="10" Width="Auto" Height="Auto">
+                            <StackPanel>
+                                <TextBlock Text="Ukupan broj soba" FontSize="18" Foreground="White" FontWeight="Bold" TextAlignment="Center" />
+                                <TextBlock Text="50" FontSize="32" Foreground="White" FontWeight="Bold" TextAlignment="Center" />
+                            </StackPanel>
+                        </Border>
+
+                        <Border BorderThickness="2" BorderBrush="#617C58" Background="#99C68E" Padding="20" CornerRadius="10" Margin="10" Width="Auto" Height="Auto">
+                            <StackPanel>
+                                <TextBlock Text="Ukupan broj gostiju" FontSize="18" Foreground="White" FontWeight="Bold" TextAlignment="Center" />
+                                <TextBlock Text="120" FontSize="32" Foreground="White" FontWeight="Bold" TextAlignment="Center" />
+                            </StackPanel>
+                        </Border>
+
+                        <Border BorderThickness="2" BorderBrush="#617C58" Background="#99C68E" Padding="20" CornerRadius="10" Margin="10" Width="Auto" Height="Auto">
+                            <StackPanel>
+                                <TextBlock Text="Ukupan broj zaposlenih" FontSize="18" Foreground="White" FontWeight="Bold" TextAlignment="Center" />
+                                <TextBlock Text="15" FontSize="32" Foreground="White" FontWeight="Bold" TextAlignment="Center" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
             </TabItem>
 
             <TabItem Header="Sobe">
                 <TextBlock Text="Rooms Content" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" Foreground="Black"/>
+            </TabItem>
+            
+            <TabItem Header="Gosti">
+                <TextBlock Text="Guests Content" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" Foreground="Black"/>
             </TabItem>
 
             <TabItem Header="Rezervacije">
                 <TextBlock Text="Reservations Content" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" Foreground="Black"/>
             </TabItem>
 
-            <TabItem Header="Uredi rezervacije">
-                <TextBlock Text="Reservation Settings Content" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" Foreground="Black"/>
+            <TabItem Header="Uredi zaposlenog">
+                <TextBlock Text="Employee Settings Content" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" Foreground="Black"/>
             </TabItem>
 
             <TabItem Header="Uredi sobe">
                 <TextBlock Text="Room Settings Content" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" Foreground="Black"/>
             </TabItem>
+            
         </TabControl>
         
 
@@ -60,7 +92,7 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <TextBlock Foreground="White" Padding="10" FontSize="20" VerticalAlignment="Center" FontWeight="Bold">Ime i prezime prijavljenog</TextBlock>
-                <Button Name="ButtonOdjava" Grid.Column="1" Content="Odjavi se" Width="100" Margin="10" HorizontalAlignment="Right" Foreground="#348017" Background="white" Style="{StaticResource ModernButton}" ></Button>
+                <Button Name="ButtonOdjava" Grid.Column="1" Content="Odjavi se" Width="100" Margin="10" HorizontalAlignment="Right" Foreground="#348017" Background="white" Style="{StaticResource ModernButton}" Click="ButtonOdjava_Click"></Button>
             </Grid>
         </Border>
         
