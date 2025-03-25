@@ -243,7 +243,69 @@
             </TabItem>
 
             <TabItem Header="Uredi sobe">
-                <TextBlock Text="Room Settings Content" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" Foreground="Black"/>
+                <Grid Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                        <Button x:Name="Button_dodajSobu" Content="Dodaj" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
+                        <Button x:Name="Button_pretraziSobuAdmin" Content="Pretraži" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
+                        <Button x:Name="Button_izmeniSobu" Content="Izmeni" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
+                        <Button x:Name="Button_obrisiSobu" Content="Obriši" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
+                    </StackPanel>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="2*" />
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock >Broj sobe</TextBlock>
+                        <TextBlock Grid.Column="1" >Sprat</TextBlock>
+                        <TextBlock Grid.Column="2">Tip sobe</TextBlock>
+                        <TextBlock Grid.Column="3">Dostupnost</TextBlock>
+                        <TextBlock Grid.Column="4">Cena po noći</TextBlock>
+                        <TextBlock Grid.Column="0" Grid.Row="3" VerticalAlignment="Center">Napomena</TextBlock>
+
+                        <TextBox x:Name="TextBox_brojSobe" Grid.Row="1" Width="150" Style="{StaticResource ModernTextBox}" HorizontalAlignment="Left" />
+                        <TextBox x:Name="TextBox_spratSobe" Grid.Row="1" Grid.Column="1" Width="150" Style="{StaticResource ModernTextBox}" HorizontalAlignment="Left" />
+                        <TextBox x:Name="TextBox_tipSobe" Grid.Row="1" Grid.Column="2" Width="150" Style="{StaticResource ModernTextBox}" HorizontalAlignment="Left" />
+                        <TextBox x:Name="TextBox_dostupnost" Grid.Row="1" Grid.Column="3" Width="150" Style="{StaticResource ModernTextBox}" HorizontalAlignment="Left" />
+                        <TextBox x:Name="TextBox_cenaSobe" Grid.Row="1" Grid.Column="4" Width="150" Style="{StaticResource ModernTextBox}" HorizontalAlignment="Left" />
+                        <TextBox x:Name="TextBox_napomenaSobe" 
+                             Grid.Row="3" Grid.ColumnSpan="4" Grid.Column="1" 
+                             Style="{StaticResource ModernTextBox}" 
+                             HorizontalAlignment="Left" VerticalContentAlignment="Top"
+                             HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"
+                             Width="400" Height="100"
+                             AcceptsReturn="True"
+                             TextWrapping="Wrap"/>      
+                    </Grid>
+
+                    <DataGrid Grid.Row="3" CanUserReorderColumns="False" CanUserResizeColumns="False" Margin="10">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Broj sobe"  Width="*" />
+                            <DataGridTextColumn Header="Sprat"  Width="*" />
+                            <DataGridTextColumn Header="Tip sobe"  Width="*" />
+                            <DataGridTextColumn Header="Dostupnost"  Width="*" />
+                            <DataGridTextColumn Header="Cena po noći"  Width="*" />
+                            <DataGridTextColumn Header="Napomena"  Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </TabItem>
             
         </TabControl>
