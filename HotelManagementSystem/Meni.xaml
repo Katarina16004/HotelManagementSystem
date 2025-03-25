@@ -33,6 +33,12 @@
 
             <TabItem Header="Dashboard">
                 <Grid>
+                    <Grid.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,5">
+                            <GradientStop Color="White" Offset="0"/>
+                            <GradientStop Color="#99C68E" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Grid.Background>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
@@ -239,7 +245,60 @@
             </TabItem>
 
             <TabItem Header="Uredi zaposlenog">
-                <TextBlock Text="Employee Settings Content" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" Foreground="Black"/>
+                <Grid Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                        <Button x:Name="Button_dodajZaposlenog" Content="Dodaj" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
+                        <Button x:Name="Button_pretraziZaposlenog" Content="Pretraži" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
+                        <Button x:Name="Button_izmeniZaposlenog" Content="Izmeni" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
+                        <Button x:Name="Button_obrisiZaposlenog" Content="Obriši" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
+                    </StackPanel>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="2*" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock >Ime</TextBlock>
+                        <TextBlock Grid.Column="1">Prezime</TextBlock>
+                        <TextBlock Grid.Column="2">Username</TextBlock>
+                        <TextBlock Grid.Column="3">Password</TextBlock>
+                        <TextBlock Grid.Column="4">Uloga</TextBlock>
+
+                        <TextBox x:Name="TextBox_imeZaposlenog" Grid.Row="1" Width="150" Style="{StaticResource ModernTextBox}" HorizontalAlignment="Left" />
+                        <TextBox x:Name="TextBox_prezimeZaposlenog" Grid.Row="1" Grid.Column="1" Width="150" Style="{StaticResource ModernTextBox}" HorizontalAlignment="Left" />
+                        <TextBox x:Name="TextBox_usernameZaposlenog" Grid.Row="1" Grid.Column="2" Width="150" Style="{StaticResource ModernTextBox}" HorizontalAlignment="Left" />
+                        <TextBox x:Name="TextBox_passwordZaposlenog" Grid.Row="1" Grid.Column="3" Width="150" Style="{StaticResource ModernTextBox}" HorizontalAlignment="Left" />
+                        <TextBox x:Name="TextBox_ulogaZaposlenog" Grid.Row="1" Grid.Column="4" Width="150" Style="{StaticResource ModernTextBox}" HorizontalAlignment="Left" />
+                    </Grid>
+
+                    <DataGrid Grid.Row="3" CanUserReorderColumns="False" CanUserResizeColumns="False" Margin="10">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID"  Width="*" />
+                            <DataGridTextColumn Header="Ime"  Width="*" />
+                            <DataGridTextColumn Header="Prezime"  Width="*" />
+                            <DataGridTextColumn Header="Username"  Width="*" />
+                            <DataGridTextColumn Header="Password"  Width="*" />
+                            <DataGridTextColumn Header="Uloga"  Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </TabItem>
 
             <TabItem Header="Uredi sobe">
