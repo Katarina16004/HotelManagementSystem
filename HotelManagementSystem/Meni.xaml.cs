@@ -22,6 +22,8 @@ namespace HotelManagementSystem
     public partial class Meni : Window
     {
         private Osoblje korisnik;
+        private DashboardService _dashboardService;
+        public DashboardModel DashboardData { get; set; }
         public Meni(Osoblje korisnik)
         {
             InitializeComponent();
@@ -39,8 +41,18 @@ namespace HotelManagementSystem
 
             this.korisnik = korisnik;
 
-        }
+            _dashboardService = new DashboardService();
+            DashboardData = new DashboardModel();
 
+            this.DataContext = DashboardData; //zbog bindinga
+
+            RefreshDashboardData();
+
+        }
+        private void RefreshDashboardData()
+        {
+            _dashboardService.UpdatePodaci(DashboardData);
+        }
         private void ButtonOdjava_Click(object sender, RoutedEventArgs e)
         {
             MainWindow main = new MainWindow();

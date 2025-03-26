@@ -51,21 +51,21 @@
                     <Border BorderThickness="2" BorderBrush="#617C58" Background="#99C68E" Padding="30" CornerRadius="10" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
                         <StackPanel>
                             <TextBlock Text="Ukupan broj soba" FontSize="18" Foreground="White" FontWeight="Bold" TextAlignment="Center" />
-                            <TextBlock Text="50" FontSize="32" Foreground="#806517" FontWeight="Bold" TextAlignment="Center" />
+                            <TextBlock Text="{Binding BrojSoba}" FontSize="32" Foreground="#806517" FontWeight="Bold" TextAlignment="Center" />
                         </StackPanel>
                     </Border>
 
                     <Border Grid.Column="1" BorderThickness="2" BorderBrush="#617C58" Background="#99C68E" Padding="30" CornerRadius="10" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
                         <StackPanel>
                             <TextBlock Text="Ukupan broj gostiju" FontSize="18" Foreground="White" FontWeight="Bold" TextAlignment="Center" />
-                            <TextBlock Text="120" FontSize="32" Foreground="#806517" FontWeight="Bold" TextAlignment="Center" />
+                            <TextBlock Text="{Binding BrojGostiju}" FontSize="32" Foreground="#806517" FontWeight="Bold" TextAlignment="Center" />
                         </StackPanel>
                     </Border>
 
                     <Border Grid.Column="2" BorderThickness="2" BorderBrush="#617C58" Background="#99C68E" Padding="30" CornerRadius="10" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
                         <StackPanel>
                             <TextBlock Text="Ukupan broj zaposlenih" FontSize="18" Foreground="White" FontWeight="Bold" TextAlignment="Center" />
-                            <TextBlock Text="15" FontSize="32" Foreground="#806517" FontWeight="Bold" TextAlignment="Center" />
+                            <TextBlock Text="{Binding BrojZaposlenih}" FontSize="32" Foreground="#806517" FontWeight="Bold" TextAlignment="Center" />
                         </StackPanel>
                     </Border>
                 </Grid>

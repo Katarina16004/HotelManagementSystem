@@ -10,13 +10,13 @@ using Microsoft.Data.SqlClient;
 
 namespace HotelManagementSystem.Services
 {
-    public class PovezivanjeSaBazom
+    public class AutentifikacijaService
     {
         string connString = "Data Source=localhost;Initial Catalog=HMS;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
         string query = "SELECT * FROM [osoblje] WHERE username = @username AND sifra = @sifra";
         private MainWindow _mainWindow;
         private string uloga { get; set; } = "";
-        public PovezivanjeSaBazom(MainWindow mainWindow)
+        public AutentifikacijaService(MainWindow mainWindow)
         {
             _mainWindow = mainWindow;
         }

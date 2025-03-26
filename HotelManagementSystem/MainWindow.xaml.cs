@@ -17,12 +17,12 @@ namespace HotelManagementSystem
     /// </summary>
     public partial class MainWindow : Window
     {
-        PovezivanjeSaBazom dbPovezivanje;
+        AutentifikacijaService dbPovezivanje;
         bool vidljivostLozinke = false;
         public MainWindow()
         {
             InitializeComponent();
-            dbPovezivanje = new PovezivanjeSaBazom(this);
+            dbPovezivanje = new AutentifikacijaService(this);
             PasswordBox.PasswordChanged += PasswordBox_PasswordChanged;
             EyeIcon.Visibility = Visibility.Collapsed;
             UsernameTextBox.Focus();
