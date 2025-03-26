@@ -138,8 +138,8 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                        <Button x:Name="Button_dodajGosta" Content="Dodaj" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
-                        <Button x:Name="Button_pretraziGosta" Content="Pretraži" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
+                        <Button x:Name="Button_dodajGosta" Content="Dodaj" Width="100" Margin="5" Style="{StaticResource ModernButton}" Click="Button_dodajGosta_Click" />
+                        <Button x:Name="Button_pretraziGosta" Content="Pretraži" Width="100" Margin="5" Style="{StaticResource ModernButton}" Click="Button_pretraziGosta_Click" />
                         <Button x:Name="Button_izmeniGosta" Content="Izmeni" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
                         <Button x:Name="Button_obrisiGosta" Content="Obriši" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
                     </StackPanel>
@@ -175,17 +175,17 @@
                         <TextBox x:Name="TextBox_licna" Grid.Row="1" Grid.Column="6" Width="150" Style="{StaticResource ModernTextBox}" HorizontalAlignment="Left" />
                     </Grid>
 
-                    <DataGrid Grid.Row="3" CanUserReorderColumns="False" CanUserResizeColumns="False" Margin="10">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID"  Width="*" />
+                    <DataGrid Name="DataGrid_gosti" Grid.Row="3" CanUserReorderColumns="False" CanUserResizeColumns="False" Margin="10" SelectionChanged="DataGrid_gosti_SelectionChanged">
+                        <!-- <DataGrid.Columns>
+                            <DataGridTextColumn Width="*" />
                             <DataGridTextColumn Header="Ime"  Width="*" />
                             <DataGridTextColumn Header="Prezime"  Width="*" />
                             <DataGridTextColumn Header="Pol"  Width="*" />
                             <DataGridTextColumn Header="Telefon"  Width="*" />
                             <DataGridTextColumn Header="Državljanstvo"  Width="*" />
                             <DataGridTextColumn Header="Pasoš"  Width="*" />
-                            <DataGridTextColumn Header="Lična karta"  Width="*" />
-                        </DataGrid.Columns>
+                           <DataGridTextColumn Header="Lična karta"  Width="*" />
+                         </DataGrid.Columns> -->
                     </DataGrid>
                 </Grid>
             </TabItem>
