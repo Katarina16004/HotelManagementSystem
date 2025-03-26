@@ -11,6 +11,6 @@ namespace HotelManagementSystem.Services
         bool Dodaj(T item);
         bool Obrisi(T item);
         //bool Izmeni(T item);
-        IEnumerable<T> Pretrazi(Dictionary<string, object> parametri);
+        List<T> Pretrazi(Dictionary<string, object> parametri);
     }
 }

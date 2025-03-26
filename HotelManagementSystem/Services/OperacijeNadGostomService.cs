@@ -13,75 +13,112 @@ namespace HotelManagementSystem.Services
     public class OperacijeNadGostomService:IOperacijeService<Gost>
     {
         private string connString = "Data Source=localhost;Initial Catalog=HMS;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
-        public IEnumerable<Gost> Pretrazi(Dictionary<string, object> parametri)
+        public List<Gost> Pretrazi(Dictionary<string, object> parametri)
         {
             List<Gost> gosti = new List<Gost>();
             using (var connection = new SqlConnection(connString))
             {
                 connection.Open();
 
-                var queryBuilder = new StringBuilder("SELECT * FROM gost WHERE ");
-                var parameters = new List<SqlParameter>();
-                foreach (var param in parametri) //oni textBoxovi koji sadrze nesto
-                {
-                    queryBuilder.Append($"{param.Key} = @{param.Key} AND ");
-                    parameters.Add(new SqlParameter($"@{param.Key}", param.Value));
-                }
                 if (parametri.Count == 0)
                 {
                     return PrikaziSveGoste();
                 }
 
-                // and na kraju
-                queryBuilder.Length=queryBuilder.Length - 4;
+                string query = "SELECT * FROM gost WHERE ";
+                List<SqlParameter> parameters = new List<SqlParameter>();
 
-                var command = new SqlCommand(queryBuilder.ToString(), connection);
-                command.Parameters.AddRange(parameters.ToArray());
-
-                using (var reader = command.ExecuteReader())
+                if (parametri.ContainsKey("Ime"))
                 {
-                    while (reader.Read())
+                    query = query + "Ime=@Ime AND ";
+                    parameters.Add(new SqlParameter("@Ime", parametri["Ime"]));
+
+                }
+                if (parametri.ContainsKey("Prezime"))
+                {
+                    query = query + "Prezime=@Prezime AND ";
+                    parameters.Add(new SqlParameter("@Prezime", parametri["Prezime"]));
+                }
+                if (parametri.ContainsKey("Telefon"))
+                {
+                    query = query + "Telefon=@Telefon AND ";
+                    parameters.Add(new SqlParameter("@Telefon", parametri["Telefon"]));
+                }
+                if (parametri.ContainsKey("Drzavljanstvo"))
+                {
+                    query = query + "Drzavljanstvo=@Drzavljanstvo AND ";
+                    parameters.Add(new SqlParameter("@Drzavljanstvo", parametri["Drzavljanstvo"]));
+                }
+                if (parametri.ContainsKey("Pol"))
+                {
+                    query = query + "Pol=@Pol AND ";
+                    parameters.Add(new SqlParameter("@Pol", parametri["Pol"]));
+                }
+                if (parametri.ContainsKey("Pasos"))
+                {
+                    query = query + "Pasos=@Pasos AND ";
+                    parameters.Add(new SqlParameter("@Pasos", parametri["Pasos"]));
+                }
+                if (parametri.ContainsKey("licna_karta"))
+                {
+                    query = query + "licna_karta=@licna_karta AND ";
+                    parameters.Add(new SqlParameter("@licna_karta", parametri["licna_karta"]));
+                }
+
+                query = query.Substring(0, query.Length - 5); //brisemo AND sa kraja
+
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddRange(parameters.ToArray());
+
+                    using (var reader = command.ExecuteReader())
                     {
-                        gosti.Add(new Gost(
-                            reader.GetInt32(0),
-                            reader.GetString(1),
-                            reader.GetString(2),
-                            reader.GetString(3),
-                            reader.GetString(4),
-                            reader.GetString(5),
-                            reader.IsDBNull(6) ? "" : reader.GetString(6),
-                            reader.IsDBNull(7) ? "" : reader.GetString(7)
-                        ));
+                        while (reader.Read())
+                        {
+                            Gost gost = new Gost(
+                                reader.GetInt32(reader.GetOrdinal("id")),
+                                reader.GetString(reader.GetOrdinal("ime")),
+                                reader.GetString(reader.GetOrdinal("prezime")),
+                                reader.GetString(reader.GetOrdinal("telefon")),
+                                reader.GetString(reader.GetOrdinal("drzavljanstvo")),
+                                reader.GetString(reader.GetOrdinal("pol")),
+                                reader.IsDBNull(reader.GetOrdinal("pasos")) ? null : reader.GetString(reader.GetOrdinal("pasos")),
+                                reader.IsDBNull(reader.GetOrdinal("licna_karta")) ? null : reader.GetString(reader.GetOrdinal("licna_karta"))
+                            );
+                            gosti.Add(gost);
+                        }
                     }
                 }
             }
             return gosti;
         }
-        public IEnumerable<Gost> PrikaziSveGoste()
+        public List<Gost> PrikaziSveGoste()
         {
             List<Gost> gosti = new List<Gost>();
             using (var connection = new SqlConnection(connString))
             {
                 connection.Open();
 
-                var queryBuilder = new StringBuilder("SELECT * FROM gost");
+                string query ="SELECT * FROM gost";
 
-                var command = new SqlCommand(queryBuilder.ToString(), connection);
-
-                using (var reader = command.ExecuteReader())
+                using (var command = new SqlCommand(query, connection))
                 {
-                    while (reader.Read())
+                    using (var reader = command.ExecuteReader())
                     {
-                        gosti.Add(new Gost(
-                            reader.GetInt32(0),
-                            reader.GetString(1),
-                            reader.GetString(2),
-                            reader.GetString(3),
-                            reader.GetString(4),
-                            reader.GetString(5),
-                            reader.IsDBNull(6) ? "" : reader.GetString(6),
-                            reader.IsDBNull(7) ? "" : reader.GetString(7)
-                        ));
+                        while (reader.Read())
+                        {
+                            Gost gost = new Gost(
+                                reader.GetInt32(reader.GetOrdinal("id")),
+                                reader.GetString(reader.GetOrdinal("ime")),
+                                reader.GetString(reader.GetOrdinal("prezime")),
+                                reader.GetString(reader.GetOrdinal("telefon")),
+                                reader.GetString(reader.GetOrdinal("drzavljanstvo")),
+                                reader.GetString(reader.GetOrdinal("pol")),
+                                reader.IsDBNull(reader.GetOrdinal("pasos")) ? null : reader.GetString(reader.GetOrdinal("pasos")),
+                                reader.IsDBNull(reader.GetOrdinal("licna_karta")) ? null : reader.GetString(reader.GetOrdinal("licna_karta"))
+                            );
+                            gosti.Add(gost);
+                        }
                     }
                 }
             }
@@ -111,9 +148,9 @@ namespace HotelManagementSystem.Services
                 MessageBox.Show("Gost sa istim podacima već postoji!", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
-            if (ProveriPostojanjePasosa(gost.Pasos) || ProveriPostojanjeLicneKarte(gost.LicnaKarta))
+            if ((gost.Pasos != null && ProveriPostojanjePasosa(gost.Pasos)) || (gost.LicnaKarta != null && ProveriPostojanjeLicneKarte(gost.LicnaKarta)))
             {
-                MessageBox.Show("Pasos ili Lična karta sa tim brojem već postoji!", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Pasos ili lična karta sa tim brojem već postoji!", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             
@@ -121,20 +158,22 @@ namespace HotelManagementSystem.Services
             {
                 connection.Open();
 
-                var query = "INSERT INTO gost (Ime, Prezime, Telefon, Drzavljanstvo, Pol, Pasos, licna_karta) " +
+                string query = "INSERT INTO gost (Ime, Prezime, Telefon, Drzavljanstvo, Pol, Pasos, licna_karta) " +
                             "VALUES (@Ime, @Prezime, @Telefon, @Drzavljanstvo, @Pol, @Pasos, @licna_karta)";
 
-                var command = new SqlCommand(query, connection);
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Ime", gost.Ime);
+                    command.Parameters.AddWithValue("@Prezime", gost.Prezime);
+                    command.Parameters.AddWithValue("@Telefon", gost.Telefon);
+                    command.Parameters.AddWithValue("@Drzavljanstvo", gost.Drzavljanstvo);
+                    command.Parameters.AddWithValue("@Pol", gost.Pol);
+                    command.Parameters.AddWithValue("@Pasos", string.IsNullOrEmpty(gost.Pasos) ? (object)DBNull.Value : gost.Pasos);
+                    command.Parameters.AddWithValue("@licna_karta", string.IsNullOrEmpty(gost.LicnaKarta) ? (object)DBNull.Value : gost.LicnaKarta);
 
-                command.Parameters.AddWithValue("@Ime", gost.Ime);
-                command.Parameters.AddWithValue("@Prezime", gost.Prezime);
-                command.Parameters.AddWithValue("@Telefon", gost.Telefon);
-                command.Parameters.AddWithValue("@Drzavljanstvo", gost.Drzavljanstvo);
-                command.Parameters.AddWithValue("@Pol", gost.Pol);
-                command.Parameters.AddWithValue("@Pasos", string.IsNullOrEmpty(gost.Pasos) ? (object)DBNull.Value : gost.Pasos);
-                command.Parameters.AddWithValue("@licna_karta", string.IsNullOrEmpty(gost.LicnaKarta) ? (object)DBNull.Value : gost.LicnaKarta);
 
-                command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
+                }
             }
             MessageBox.Show("Uspesno dodato");
             return true;
@@ -146,13 +185,14 @@ namespace HotelManagementSystem.Services
             using (var connection = new SqlConnection(connString))
             {
                 connection.Open();
-
-                var query = "SELECT COUNT(*) FROM gost WHERE Pasos = @Pasos";
-                var command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@Pasos", pasos);
-
-                int count = (int)command.ExecuteScalar();
-                return count > 0;
+                int broj = 0;
+                string query = "SELECT COUNT(*) FROM gost WHERE Pasos = @Pasos";
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Pasos", pasos);
+                    broj = (int)command.ExecuteScalar();
+                }
+                return broj > 0;
             }
         }
 
@@ -164,12 +204,14 @@ namespace HotelManagementSystem.Services
             {
                 connection.Open();
 
-                var query = "SELECT COUNT(*) FROM gost WHERE licna_karta = @licna_karta";
-                var command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@licna_karta", licna_karta);
-
-                int count = (int)command.ExecuteScalar();
-                return count > 0;
+                int broj = 0;
+                string query = "SELECT COUNT(*) FROM gost WHERE licna_karta = @licna_karta";
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@licna_karta", licna_karta);
+                    broj = (int)command.ExecuteScalar();
+                }
+                return broj > 0;
             }
         }
         private bool ProveriPostojanjeGosta(Gost gost)
@@ -179,14 +221,17 @@ namespace HotelManagementSystem.Services
                 connection.Open();
 
                 var query = "SELECT COUNT(*) FROM gost WHERE Ime = @Ime AND Prezime = @Prezime AND Telefon = @Telefon";
-                var command = new SqlCommand(query, connection);
 
-                command.Parameters.AddWithValue("@Ime", gost.Ime);
-                command.Parameters.AddWithValue("@Prezime", gost.Prezime);
-                command.Parameters.AddWithValue("@Telefon", gost.Telefon);
+                int broj = 0;
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Ime", gost.Ime);
+                    command.Parameters.AddWithValue("@Prezime", gost.Prezime);
+                    command.Parameters.AddWithValue("@Telefon", gost.Telefon);
 
-                int count = (int)command.ExecuteScalar();
-                return count > 0;
+                    broj = (int)command.ExecuteScalar();
+                }
+                return broj > 0;
             }
         }
 
@@ -209,15 +254,18 @@ namespace HotelManagementSystem.Services
             using (var connection = new SqlConnection(connString))
             {
                 connection.Open();
-                var query = "DELETE FROM gost WHERE Ime = @Ime AND Prezime = @Prezime AND Telefon = @Telefon";
+                string query = "DELETE FROM gost WHERE Ime = @Ime AND Prezime = @Prezime AND Telefon = @Telefon";
 
-                var command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@Ime", gost.Ime);
-                command.Parameters.AddWithValue("@Prezime", gost.Prezime);
-                command.Parameters.AddWithValue("@Telefon", gost.Telefon);
+                int broj = 0;
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Ime", gost.Ime);
+                    command.Parameters.AddWithValue("@Prezime", gost.Prezime);
+                    command.Parameters.AddWithValue("@Telefon", gost.Telefon);
 
-                var rowsAffected = command.ExecuteNonQuery();
-                if (rowsAffected > 0)
+                    broj = command.ExecuteNonQuery();
+                }
+                if (broj > 0)
                 {
                     MessageBox.Show("Gost je uspešno obrisan!", "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
                     return true;

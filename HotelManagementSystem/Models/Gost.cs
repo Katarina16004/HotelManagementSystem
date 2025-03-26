@@ -14,9 +14,9 @@ namespace HotelManagementSystem.Models
         public string Pol { get; set; } = "";
         public string Telefon { get; set; } = "";
         public string Drzavljanstvo { get; set; } = "";
-        public string Pasos { get; set; } = "";
-        public string LicnaKarta { get; set; } = "";
-        public Gost(int id, string ime, string prezime, string telefon, string drzavljanstvo, string pol, string pasos = "", string licnaKarta = "")
+        public string? Pasos { get; set; } = null; 
+        public string? LicnaKarta { get; set; } = null; 
+        public Gost(int id, string ime, string prezime, string telefon, string drzavljanstvo, string pol, string? pasos = null, string? licnaKarta = null)
         {
             Id = id;
             Ime = ime;
@@ -28,7 +28,7 @@ namespace HotelManagementSystem.Models
             LicnaKarta = licnaKarta;
         }
 
-        public Gost(string ime, string prezime, string telefon, string drzavljanstvo, string pol, string pasos="", string licnaKarta="")
+        public Gost(string ime, string prezime, string telefon, string drzavljanstvo, string pol, string? pasos = null, string? licnaKarta = null)
         {
             Ime = ime;
             Prezime = prezime;
