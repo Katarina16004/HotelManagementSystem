@@ -1,4 +1,5 @@
-﻿using HotelManagementSystem.Services;
+﻿using HotelManagementSystem.Models;
+using HotelManagementSystem.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,24 @@ namespace HotelManagementSystem
     /// </summary>
     public partial class Meni : Window
     {
-        public Meni()
+        private Osoblje korisnik;
+        public Meni(Osoblje korisnik)
         {
             InitializeComponent();
+            TB_info.Text = "ID: " + korisnik.IdOsoblja + " \tUsername: " + korisnik.Username;
+            if (korisnik.Uloga == "admin")
+            {
+                TabItem_urediSobe.Visibility = Visibility.Visible;
+                TabItem_urediZaposlenog.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                TabItem_urediSobe.Visibility = Visibility.Hidden;
+                TabItem_urediZaposlenog.Visibility = Visibility.Hidden;
+            }
+
+            this.korisnik = korisnik;
+
         }
 
         private void ButtonOdjava_Click(object sender, RoutedEventArgs e)

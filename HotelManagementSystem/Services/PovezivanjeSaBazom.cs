@@ -5,15 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using HotelManagementSystem.Models;
 using Microsoft.Data.SqlClient;
 
 namespace HotelManagementSystem.Services
 {
-    class PovezivanjeSaBazom
+    public class PovezivanjeSaBazom
     {
-        string connString = "Data Source=DESKTOP-RP1BINM\\SQLEXPRESS;Initial Catalog=HMS;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
+        string connString = "Data Source=localhost;Initial Catalog=HMS;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
         string query = "SELECT * FROM [osoblje] WHERE username = @username AND sifra = @sifra";
         private MainWindow _mainWindow;
+        private string uloga { get; set; } = "";
         public PovezivanjeSaBazom(MainWindow mainWindow)
         {
             _mainWindow = mainWindow;
@@ -29,10 +31,18 @@ namespace HotelManagementSystem.Services
                     cmd.Parameters.AddWithValue("@sifra", _mainWindow.PasswordBox.Password.Trim());
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        if (reader.HasRows)
+                        if (reader.Read())
                         {
+                            Osoblje korisnik = new Osoblje
+                            {
+                                IdOsoblja = reader.GetInt32(reader.GetOrdinal("id")),
+                                Username = reader.GetString(reader.GetOrdinal("username")),
+                                Password = reader.GetString(reader.GetOrdinal("sifra")),
+                                Uloga = reader.GetString(reader.GetOrdinal("uloga"))
+                            };
+
                             _mainWindow.Hide();
-                            Meni meniProzor = new Meni();
+                            Meni meniProzor = new Meni(korisnik);
                             meniProzor.Show();
                         }
                         else

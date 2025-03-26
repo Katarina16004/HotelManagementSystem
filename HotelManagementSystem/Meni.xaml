@@ -244,7 +244,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Uredi zaposlenog">
+            <TabItem Header="Uredi zaposlenog" x:Name="TabItem_urediZaposlenog">
                 <Grid Margin="20">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
@@ -301,7 +301,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Uredi sobe">
+            <TabItem Header="Uredi sobe" x:Name="TabItem_urediSobe">
                 <Grid Margin="20">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
@@ -376,7 +376,7 @@
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TextBlock Foreground="White" Padding="10" FontSize="20" VerticalAlignment="Center" FontWeight="Bold">Ime i prezime prijavljenog</TextBlock>
+                <TextBlock Name="TB_info" Foreground="White" Padding="10" FontSize="20" VerticalAlignment="Center" FontWeight="Bold">Ime i prezime prijavljenog</TextBlock>
                 <Button Name="ButtonOdjava" Grid.Column="1" Content="Odjavi se" Width="100" Margin="10" HorizontalAlignment="Right" Foreground="#348017" Background="white" Style="{StaticResource ModernButton}" Click="ButtonOdjava_Click"></Button>
             </Grid>
         </Border>
