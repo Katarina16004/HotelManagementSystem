@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using HotelManagementSystem.Services;
 
 namespace HotelManagementSystem
 {
@@ -16,10 +17,12 @@ namespace HotelManagementSystem
     /// </summary>
     public partial class MainWindow : Window
     {
+        PovezivanjeSaBazom dbPovezivanje;
         bool vidljivostLozinke = false;
         public MainWindow()
         {
             InitializeComponent();
+            dbPovezivanje = new PovezivanjeSaBazom(this);
             PasswordBox.PasswordChanged += PasswordBox_PasswordChanged;
             EyeIcon.Visibility = Visibility.Collapsed;
             UsernameTextBox.Focus();
@@ -53,6 +56,10 @@ namespace HotelManagementSystem
             }
 
             vidljivostLozinke = !vidljivostLozinke;
+        }
+        private void Prijavi(object sender, RoutedEventArgs e)
+        {
+            dbPovezivanje.Prijava();
         }
     }
 }

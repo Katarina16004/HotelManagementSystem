@@ -14,6 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Resources\otvoreno_oko.png" />
     <Resource Include="Resources\zatvoreno_oko.png" />
   </ItemGroup>

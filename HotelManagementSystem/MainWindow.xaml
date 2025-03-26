@@ -32,7 +32,7 @@
                     <Image x:Name="EyeIcon" MouseDown="EyeIcon_MouseDown" 
                            Source="Resources/otvoreno_oko.png" Width="40" Height="40" Grid.Column="1"/>
                 </Grid>
-                <Button Content="Prijavi se" Style="{StaticResource ModernButton}"/>
+                <Button Content="Prijavi se" Click="Prijavi" Style="{StaticResource ModernButton}"/>
             </StackPanel>
         </Border>
 
