@@ -141,7 +141,7 @@
                         <Button x:Name="Button_dodajGosta" Content="Dodaj" Width="100" Margin="5" Style="{StaticResource ModernButton}" Click="Button_dodajGosta_Click" />
                         <Button x:Name="Button_pretraziGosta" Content="Pretraži" Width="100" Margin="5" Style="{StaticResource ModernButton}" Click="Button_pretraziGosta_Click" />
                         <Button x:Name="Button_izmeniGosta" Content="Izmeni" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
-                        <Button x:Name="Button_obrisiGosta" Content="Obriši" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
+                        <Button x:Name="Button_obrisiGosta" Content="Obriši" Width="100" Margin="5" Style="{StaticResource ModernButton}" Click="Button_obrisiGosta_Click" />
                     </StackPanel>
 
                     <Grid Grid.Row="1">
@@ -160,17 +160,17 @@
                         </Grid.RowDefinitions>
                         <TextBlock >Ime</TextBlock>
                         <TextBlock Grid.Column="1" >Prezime</TextBlock>
-                        <TextBlock Grid.Column="2">Pol</TextBlock>
-                        <TextBlock Grid.Column="3">Telefon</TextBlock>
-                        <TextBlock Grid.Column="4">Državljanstvo</TextBlock>
+                        <TextBlock Grid.Column="4">Pol</TextBlock>
+                        <TextBlock Grid.Column="2">Telefon</TextBlock>
+                        <TextBlock Grid.Column="3">Državljanstvo</TextBlock>
                         <TextBlock Grid.Column="5">Pasoš</TextBlock>
                         <TextBlock Grid.Column="6">Lična karta</TextBlock>
 
                         <TextBox x:Name="TextBox_ime" Grid.Row="1" Width="150" Style="{StaticResource ModernTextBox}" HorizontalAlignment="Left" />
                         <TextBox x:Name="TextBox_prezime" Grid.Row="1" Grid.Column="1" Width="150" Style="{StaticResource ModernTextBox}" HorizontalAlignment="Left" />
-                        <TextBox x:Name="TextBox_pol" Grid.Row="1" Grid.Column="2" Width="150" Style="{StaticResource ModernTextBox}" HorizontalAlignment="Left" />
-                        <TextBox x:Name="TextBox_telefon" Grid.Row="1" Grid.Column="3" Width="150" Style="{StaticResource ModernTextBox}" HorizontalAlignment="Left" />
-                        <TextBox x:Name="TextBox_drzavljanstvo" Grid.Row="1" Grid.Column="4" Width="150" Style="{StaticResource ModernTextBox}" HorizontalAlignment="Left" />
+                        <TextBox x:Name="TextBox_telefon" Grid.Row="1" Grid.Column="2" Width="150" Style="{StaticResource ModernTextBox}" HorizontalAlignment="Left" />
+                        <TextBox x:Name="TextBox_drzavljanstvo" Grid.Row="1" Grid.Column="3" Width="150" Style="{StaticResource ModernTextBox}" HorizontalAlignment="Left" />
+                        <TextBox x:Name="TextBox_pol" Grid.Row="1" Grid.Column="4" Width="150" Style="{StaticResource ModernTextBox}" HorizontalAlignment="Left" />
                         <TextBox x:Name="TextBox_pasos" Grid.Row="1" Grid.Column="5" Width="150" Style="{StaticResource ModernTextBox}" HorizontalAlignment="Left" />
                         <TextBox x:Name="TextBox_licna" Grid.Row="1" Grid.Column="6" Width="150" Style="{StaticResource ModernTextBox}" HorizontalAlignment="Left" />
                     </Grid>

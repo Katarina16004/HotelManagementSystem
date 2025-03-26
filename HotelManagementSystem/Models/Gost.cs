@@ -16,25 +16,25 @@ namespace HotelManagementSystem.Models
         public string Drzavljanstvo { get; set; } = "";
         public string Pasos { get; set; } = "";
         public string LicnaKarta { get; set; } = "";
-        public Gost(int id, string ime, string prezime, string pol, string telefon, string drzavljanstvo, string pasos = "", string licnaKarta = "")
+        public Gost(int id, string ime, string prezime, string telefon, string drzavljanstvo, string pol, string pasos = "", string licnaKarta = "")
         {
             Id = id;
             Ime = ime;
             Prezime = prezime;
-            Pol = pol;
             Telefon = telefon;
             Drzavljanstvo = drzavljanstvo;
+            Pol = pol;
             Pasos = pasos;
             LicnaKarta = licnaKarta;
         }
 
-        public Gost(string ime, string prezime, string pol, string telefon, string drzavljanstvo, string pasos="", string licnaKarta="")
+        public Gost(string ime, string prezime, string telefon, string drzavljanstvo, string pol, string pasos="", string licnaKarta="")
         {
             Ime = ime;
             Prezime = prezime;
-            Pol = pol;
             Telefon = telefon;
             Drzavljanstvo = drzavljanstvo;
+            Pol = pol;
             Pasos = pasos;
             LicnaKarta = licnaKarta;
         }

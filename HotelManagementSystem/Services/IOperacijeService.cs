@@ -9,7 +9,7 @@ namespace HotelManagementSystem.Services
     public interface IOperacijeService<T>
     {
         bool Dodaj(T item);
-        bool Obrisi(int id);
+        bool Obrisi(T item);
         //bool Izmeni(T item);
         IEnumerable<T> Pretrazi(Dictionary<string, object> parametri);
     }

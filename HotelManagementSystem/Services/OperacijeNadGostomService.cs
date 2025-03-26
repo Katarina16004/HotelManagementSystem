@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace HotelManagementSystem.Services
 {
@@ -100,25 +101,36 @@ namespace HotelManagementSystem.Services
                 MessageBox.Show("Mora biti popunjeno barem jedno od polja: Pasos ili Lična karta!", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
+            if (gost.Pol !="Z" && gost.Pol!="M")
+            {
+                MessageBox.Show("Pol mora biti Z ili M", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
             if (ProveriPostojanjeGosta(gost))
             {
                 MessageBox.Show("Gost sa istim podacima već postoji!", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
+            if (ProveriPostojanjePasosa(gost.Pasos) || ProveriPostojanjeLicneKarte(gost.LicnaKarta))
+            {
+                MessageBox.Show("Pasos ili Lična karta sa tim brojem već postoji!", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+            
             using (var connection = new SqlConnection(connString))
             {
                 connection.Open();
 
-                var query = "INSERT INTO gost (Ime, Prezime, Pol, Telefon, Drzavljanstvo, Pasos, licna_karta) " +
-                            "VALUES (@Ime, @Prezime, @Pol, @Telefon, @Drzavljanstvo, @Pasos, @licna_karta)";
+                var query = "INSERT INTO gost (Ime, Prezime, Telefon, Drzavljanstvo, Pol, Pasos, licna_karta) " +
+                            "VALUES (@Ime, @Prezime, @Telefon, @Drzavljanstvo, @Pol, @Pasos, @licna_karta)";
 
                 var command = new SqlCommand(query, connection);
 
                 command.Parameters.AddWithValue("@Ime", gost.Ime);
                 command.Parameters.AddWithValue("@Prezime", gost.Prezime);
-                command.Parameters.AddWithValue("@Pol", gost.Pol);
                 command.Parameters.AddWithValue("@Telefon", gost.Telefon);
                 command.Parameters.AddWithValue("@Drzavljanstvo", gost.Drzavljanstvo);
+                command.Parameters.AddWithValue("@Pol", gost.Pol);
                 command.Parameters.AddWithValue("@Pasos", string.IsNullOrEmpty(gost.Pasos) ? (object)DBNull.Value : gost.Pasos);
                 command.Parameters.AddWithValue("@licna_karta", string.IsNullOrEmpty(gost.LicnaKarta) ? (object)DBNull.Value : gost.LicnaKarta);
 
@@ -127,24 +139,95 @@ namespace HotelManagementSystem.Services
             MessageBox.Show("Uspesno dodato");
             return true;
         }
-        private bool ProveriPostojanjeGosta(Gost gost)
+        private bool ProveriPostojanjePasosa(string pasos)
         {
+            if (string.IsNullOrEmpty(pasos)) return false;
+
             using (var connection = new SqlConnection(connString))
             {
                 connection.Open();
 
-                var query = "SELECT COUNT(*) FROM gost WHERE Ime = @Ime AND Prezime = @Prezime AND Telefon = @Telefon AND Pol=@Pol";
+                var query = "SELECT COUNT(*) FROM gost WHERE Pasos = @Pasos";
                 var command = new SqlCommand(query, connection);
-
-                command.Parameters.AddWithValue("@Ime", gost.Ime);
-                command.Parameters.AddWithValue("@Prezime", gost.Prezime);
-                command.Parameters.AddWithValue("@Telefon", gost.Telefon);
-                command.Parameters.AddWithValue("@Pol", gost.Pol);
+                command.Parameters.AddWithValue("@Pasos", pasos);
 
                 int count = (int)command.ExecuteScalar();
                 return count > 0;
             }
         }
 
+        private bool ProveriPostojanjeLicneKarte(string licna_karta)
+        {
+            if (string.IsNullOrEmpty(licna_karta)) return false;
+
+            using (var connection = new SqlConnection(connString))
+            {
+                connection.Open();
+
+                var query = "SELECT COUNT(*) FROM gost WHERE licna_karta = @licna_karta";
+                var command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@licna_karta", licna_karta);
+
+                int count = (int)command.ExecuteScalar();
+                return count > 0;
+            }
+        }
+        private bool ProveriPostojanjeGosta(Gost gost)
+        {
+            using (var connection = new SqlConnection(connString))
+            {
+                connection.Open();
+
+                var query = "SELECT COUNT(*) FROM gost WHERE Ime = @Ime AND Prezime = @Prezime AND Telefon = @Telefon";
+                var command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@Ime", gost.Ime);
+                command.Parameters.AddWithValue("@Prezime", gost.Prezime);
+                command.Parameters.AddWithValue("@Telefon", gost.Telefon);
+
+                int count = (int)command.ExecuteScalar();
+                return count > 0;
+            }
+        }
+
+        public bool Obrisi(Gost gost)
+        {
+            if (string.IsNullOrEmpty(gost.Ime) || string.IsNullOrEmpty(gost.Prezime) ||
+                    string.IsNullOrEmpty(gost.Pol) || string.IsNullOrEmpty(gost.Telefon) ||
+                    string.IsNullOrEmpty(gost.Drzavljanstvo))
+            {
+                MessageBox.Show("Svi obavezni podaci moraju biti popunjeni!", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+
+            if (!ProveriPostojanjeGosta(gost))
+            {
+                MessageBox.Show("Gost sa tim podacima ne postoji u bazi.", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+
+            using (var connection = new SqlConnection(connString))
+            {
+                connection.Open();
+                var query = "DELETE FROM gost WHERE Ime = @Ime AND Prezime = @Prezime AND Telefon = @Telefon";
+
+                var command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@Ime", gost.Ime);
+                command.Parameters.AddWithValue("@Prezime", gost.Prezime);
+                command.Parameters.AddWithValue("@Telefon", gost.Telefon);
+
+                var rowsAffected = command.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    MessageBox.Show("Gost je uspešno obrisan!", "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return true;
+                }
+                else
+                {
+                    MessageBox.Show("Došlo je do greške prilikom brisanja gosta.", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
+            }
+        }
     }
 }
