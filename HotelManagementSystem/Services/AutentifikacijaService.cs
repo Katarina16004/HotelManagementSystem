@@ -40,7 +40,6 @@ namespace HotelManagementSystem.Services
                                 Password = reader.GetString(reader.GetOrdinal("sifra")),
                                 Uloga = reader.GetString(reader.GetOrdinal("uloga"))
                             };
-
                             _mainWindow.Hide();
                             Meni meniProzor = new Meni(korisnik);
                             meniProzor.Show();

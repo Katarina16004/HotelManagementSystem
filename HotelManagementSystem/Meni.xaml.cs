@@ -24,6 +24,7 @@ namespace HotelManagementSystem
         private Osoblje korisnik;
         private DashboardService _dashboardService;
         private OperacijeNadGostomService _operacijeNadGostomService;
+        private RadnikSobeService _radnikSobeService;
         public DashboardModel DashboardData { get; set; }
         public Meni(Osoblje korisnik)
         {
@@ -45,6 +46,7 @@ namespace HotelManagementSystem
             _dashboardService = new DashboardService();
             DashboardData = new DashboardModel();
             _operacijeNadGostomService = new OperacijeNadGostomService();
+            _radnikSobeService = new RadnikSobeService();
 
             this.DataContext = DashboardData; //zbog bindinga
 
