@@ -1,4 +1,4 @@
-﻿CREATE DATABASE HMS;
+CREATE DATABASE HMS;
 GO
 USE HMS;
 GO
@@ -9,11 +9,19 @@ CREATE TABLE gost (
     prezime VARCHAR(50) NOT NULL,
     telefon VARCHAR(20) NOT NULL,
     drzavljanstvo VARCHAR(50) NOT NULL,
-    pol VARCHAR(1) CHECK (pol IN ('M', 'Z')),
-    pasos VARCHAR(20) UNIQUE,
-    licna_karta VARCHAR(20) UNIQUE
+    pol VARCHAR(1) CHECK (pol IN ('M', 'Z','m','z')),
+    pasos VARCHAR(20),
+    licna_karta VARCHAR(20)
 );
 GO
+CREATE UNIQUE INDEX uq_pasos
+on gost(pasos)
+where pasos IS NOT NULL;
+CREATE UNIQUE INDEX uq_licna_karta
+on gost(licna_karta)
+where licna_karta IS NOT NULL;
+go
+
 
 CREATE TABLE soba (
     broj_sobe INT PRIMARY KEY,
@@ -59,5 +67,5 @@ GO
 
 INSERT INTO gost (ime, prezime, telefon, drzavljanstvo, pol, pasos, licna_karta) VALUES 
 ('Filip', 'Isakovic', '0655290704', 'Srbija', 'M', 'AA123456', '123456789'),
-('Katarina', 'Jovanović', '0637022503', 'Srbija', 'Z', 'BB654321', '987654321');
+('Katarina', 'Jovanovi?', '0637022503', 'Srbija', 'Z', 'BB654321', '987654321');
 GO
