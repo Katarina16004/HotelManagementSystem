@@ -124,7 +124,7 @@ namespace HotelManagementSystem.Services
             }
             return gosti;
         }
-        public bool Dodaj(Gost gost)
+        public bool ProveriIspravnost(Gost gost)
         {
             if (string.IsNullOrEmpty(gost.Ime) || string.IsNullOrEmpty(gost.Prezime) || string.IsNullOrEmpty(gost.Pol) ||
                 string.IsNullOrEmpty(gost.Telefon) || string.IsNullOrEmpty(gost.Drzavljanstvo))
@@ -138,22 +138,24 @@ namespace HotelManagementSystem.Services
                 MessageBox.Show("Mora biti popunjeno barem jedno od polja: Pasos ili Lična karta!", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
-            if (gost.Pol !="Z" && gost.Pol!="M")
+            if (gost.Pol != "Z" && gost.Pol != "z" && gost.Pol != "M" && gost.Pol != "m")
             {
-                MessageBox.Show("Pol mora biti Z ili M", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Pol mora biti Z/z ili M/m", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
+
+            return true;
+        }
+        public bool Dodaj(Gost gost)
+        {
+            if (!ProveriIspravnost(gost))
+                return false;
             if (ProveriPostojanjeGosta(gost))
             {
-                MessageBox.Show("Gost sa istim podacima već postoji!", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Gost sa istim pasosom/licnom kartom već postoji!", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
-            if ((gost.Pasos != null && ProveriPostojanjePasosa(gost.Pasos)) || (gost.LicnaKarta != null && ProveriPostojanjeLicneKarte(gost.LicnaKarta)))
-            {
-                MessageBox.Show("Pasos ili lična karta sa tim brojem već postoji!", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-            
+
             using (var connection = new SqlConnection(connString))
             {
                 connection.Open();
@@ -178,56 +180,19 @@ namespace HotelManagementSystem.Services
             MessageBox.Show("Uspesno dodato");
             return true;
         }
-        private bool ProveriPostojanjePasosa(string pasos)
-        {
-            if (string.IsNullOrEmpty(pasos)) return false;
-
-            using (var connection = new SqlConnection(connString))
-            {
-                connection.Open();
-                int broj = 0;
-                string query = "SELECT COUNT(*) FROM gost WHERE Pasos = @Pasos";
-                using (var command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@Pasos", pasos);
-                    broj = (int)command.ExecuteScalar();
-                }
-                return broj > 0;
-            }
-        }
-
-        private bool ProveriPostojanjeLicneKarte(string licna_karta)
-        {
-            if (string.IsNullOrEmpty(licna_karta)) return false;
-
-            using (var connection = new SqlConnection(connString))
-            {
-                connection.Open();
-
-                int broj = 0;
-                string query = "SELECT COUNT(*) FROM gost WHERE licna_karta = @licna_karta";
-                using (var command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@licna_karta", licna_karta);
-                    broj = (int)command.ExecuteScalar();
-                }
-                return broj > 0;
-            }
-        }
-        private bool ProveriPostojanjeGosta(Gost gost)
+        private bool ProveriPostojanjeGosta(Gost gost) //ne postoje dve osobe sa istim pasosom ili licnom kartom
         {
             using (var connection = new SqlConnection(connString))
             {
                 connection.Open();
 
-                var query = "SELECT COUNT(*) FROM gost WHERE Ime = @Ime AND Prezime = @Prezime AND Telefon = @Telefon";
+                var query = "SELECT COUNT(*) FROM gost WHERE ( (pasos = @Pasos AND pasos IS NOT NULL) OR (licna_karta = @LicnaKarta AND licna_karta IS NOT NULL) )";
 
                 int broj = 0;
                 using (var command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@Ime", gost.Ime);
-                    command.Parameters.AddWithValue("@Prezime", gost.Prezime);
-                    command.Parameters.AddWithValue("@Telefon", gost.Telefon);
+                    command.Parameters.AddWithValue("@Pasos", (object?)gost.Pasos ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@LicnaKarta", (object?)gost.LicnaKarta ?? DBNull.Value);
 
                     broj = (int)command.ExecuteScalar();
                 }
@@ -275,6 +240,72 @@ namespace HotelManagementSystem.Services
                     MessageBox.Show("Došlo je do greške prilikom brisanja gosta.", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
                     return false;
                 }
+            }
+        }
+        public bool Izmeni(Gost gost)
+        {
+            if (!ProveriIspravnost(gost))
+                return false;
+            if(ProveriPostojanjeZaOstale(gost))
+            {
+                MessageBox.Show("Gost sa istim pasosom/licnom kartom već postoji!", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+                
+            
+            using (var connection = new SqlConnection(connString))
+            {
+                connection.Open();
+
+                string query = "UPDATE gost " +
+                   "SET ime = @Ime, prezime = @Prezime, telefon = @Telefon, drzavljanstvo = @Drzavljanstvo, " +
+                   "pol = @Pol, pasos = @Pasos, licna_karta = @licna_karta " +
+                   "WHERE id = @Id";
+
+
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Id", gost.Id);
+                    command.Parameters.AddWithValue("@Ime", gost.Ime);
+                    command.Parameters.AddWithValue("@Prezime", gost.Prezime);
+                    command.Parameters.AddWithValue("@Telefon", gost.Telefon);
+                    command.Parameters.AddWithValue("@Drzavljanstvo", gost.Drzavljanstvo);
+                    command.Parameters.AddWithValue("@Pol", gost.Pol);
+                    command.Parameters.AddWithValue("@Pasos", string.IsNullOrEmpty(gost.Pasos) ? (object)DBNull.Value : gost.Pasos);
+                    command.Parameters.AddWithValue("@licna_karta", string.IsNullOrEmpty(gost.LicnaKarta) ? (object)DBNull.Value : gost.LicnaKarta);
+
+                    int broj = command.ExecuteNonQuery();
+                    if(broj>0)
+                    {
+                        MessageBox.Show("Uspesno izmenjeno");
+                        return true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Došlo je do greške prilikom izmene gosta.", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return false;
+                    }
+                }
+            }
+        }
+        private bool ProveriPostojanjeZaOstale(Gost gost)
+        {
+            using (var connection = new SqlConnection(connString))
+            {
+                connection.Open();
+
+                var query = "SELECT COUNT(*) FROM gost WHERE ( (pasos = @Pasos AND pasos IS NOT NULL) OR (licna_karta = @LicnaKarta AND licna_karta IS NOT NULL) ) AND id != @Id";
+
+                int broj = 0;
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Pasos", (object?)gost.Pasos ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@LicnaKarta", (object?)gost.LicnaKarta ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@Id", gost.Id);
+
+                    broj = (int)command.ExecuteScalar();
+                }
+                return broj > 0; 
             }
         }
     }

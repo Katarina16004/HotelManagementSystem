@@ -125,20 +125,20 @@ namespace HotelManagementSystem
             var telefon = TextBox_telefon.Text;
             var drzavljanstvo = TextBox_drzavljanstvo.Text;
             var pol = TextBox_pol.Text;
-            var pasos = TextBox_pasos.Text;
-            var licnaKarta = TextBox_licna.Text;
+            string?  pasos, licnaKarta;
+            if (TextBox_pasos.Text == "")
+                pasos = null;
+            else
+                pasos = TextBox_pasos.Text;
+            if(TextBox_licna.Text == "")
+                licnaKarta = null;
+            else
+                licnaKarta= TextBox_licna.Text;
 
             Gost noviGost = new Gost(ime, prezime, telefon, drzavljanstvo, pol, pasos, licnaKarta);
 
             if(_operacijeNadGostomService.Dodaj(noviGost))
             {
-                TextBox_ime.Text = "";
-                TextBox_prezime.Text = "";
-                TextBox_telefon.Text = "";
-                TextBox_drzavljanstvo.Text = "";
-                TextBox_pol.Text = "";
-                TextBox_pasos.Text = "";
-                TextBox_licna.Text = "";
                 OsveziDataGrid();
             }
         }
@@ -156,20 +156,51 @@ namespace HotelManagementSystem
             Gost noviGost = new Gost(ime, prezime, telefon, drzavljanstvo, pol, pasos, licnaKarta);
             if(_operacijeNadGostomService.Obrisi(noviGost))
             {
-                TextBox_ime.Text = "";
-                TextBox_prezime.Text = "";
-                TextBox_telefon.Text = "";
-                TextBox_drzavljanstvo.Text = "";
-                TextBox_pol.Text = "";
-                TextBox_pasos.Text = "";
-                TextBox_licna.Text = "";
                 OsveziDataGrid();
             }
         }
         private void OsveziDataGrid()
         {
+            TextBox_ime.Text = "";
+            TextBox_prezime.Text = "";
+            TextBox_telefon.Text = "";
+            TextBox_drzavljanstvo.Text = "";
+            TextBox_pol.Text = "";
+            TextBox_pasos.Text = "";
+            TextBox_licna.Text = "";
             var rezultati = _operacijeNadGostomService.PrikaziSveGoste();
             DataGrid_gosti.ItemsSource = rezultati;
+        }
+
+        private void Button_izmeniGosta_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedGost = (Gost)DataGrid_gosti.SelectedItem;
+            if (selectedGost != null)
+            {
+                var id = selectedGost.Id;
+                var ime = TextBox_ime.Text;
+                var prezime = TextBox_prezime.Text;
+                var telefon = TextBox_telefon.Text;
+                var drzavljanstvo = TextBox_drzavljanstvo.Text;
+                var pol = TextBox_pol.Text;
+                string? pasos, licnaKarta;
+                if (TextBox_pasos.Text == "")
+                    pasos = null;
+                else
+                    pasos = TextBox_pasos.Text;
+                if (TextBox_licna.Text == "")
+                    licnaKarta = null;
+                else
+                    licnaKarta = TextBox_licna.Text;
+
+
+                Gost noviGost = new Gost(id, ime, prezime, telefon, drzavljanstvo, pol, pasos, licnaKarta);
+                if (noviGost != null)
+                {
+                    if (_operacijeNadGostomService.Izmeni(noviGost))
+                        OsveziDataGrid();
+                }
+            }
         }
     }
 }

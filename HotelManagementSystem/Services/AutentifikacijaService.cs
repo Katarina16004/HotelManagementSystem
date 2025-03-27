@@ -28,7 +28,14 @@ namespace HotelManagementSystem.Services
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@username", _mainWindow.UsernameTextBox.Text.Trim());
-                    cmd.Parameters.AddWithValue("@sifra", _mainWindow.PasswordBox.Password.Trim());
+                    string password = string.Empty;
+                    if (_mainWindow.PasswordBox.Visibility == Visibility.Visible)
+                    {
+                        password = _mainWindow.PasswordBox.Password.Trim();
+                    }
+                    else
+                        password=_mainWindow.PasswordTextBox.Text.Trim();
+                    cmd.Parameters.AddWithValue("@sifra", password);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())

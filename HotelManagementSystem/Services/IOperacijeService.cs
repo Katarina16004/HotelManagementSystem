@@ -10,7 +10,7 @@ namespace HotelManagementSystem.Services
     {
         bool Dodaj(T item);
         bool Obrisi(T item);
-        //bool Izmeni(T item);
+        bool Izmeni(T item);
         List<T> Pretrazi(Dictionary<string, object> parametri);
     }
 }

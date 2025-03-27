@@ -140,7 +140,7 @@
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
                         <Button x:Name="Button_dodajGosta" Content="Dodaj" Width="100" Margin="5" Style="{StaticResource ModernButton}" Click="Button_dodajGosta_Click" />
                         <Button x:Name="Button_pretraziGosta" Content="Pretraži" Width="100" Margin="5" Style="{StaticResource ModernButton}" Click="Button_pretraziGosta_Click" />
-                        <Button x:Name="Button_izmeniGosta" Content="Izmeni" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
+                        <Button x:Name="Button_izmeniGosta" Content="Izmeni" Width="100" Margin="5" Style="{StaticResource ModernButton}" Click="Button_izmeniGosta_Click" />
                         <Button x:Name="Button_obrisiGosta" Content="Obriši" Width="100" Margin="5" Style="{StaticResource ModernButton}" Click="Button_obrisiGosta_Click" />
                     </StackPanel>
 
