@@ -72,7 +72,7 @@ namespace HotelManagementSystem.Services
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Došlo je do greške: {ex.Message}");
+                    MessageBox.Show("Molimo vas da unesete sva polja!");
                 }
             }
             return uspesno;
