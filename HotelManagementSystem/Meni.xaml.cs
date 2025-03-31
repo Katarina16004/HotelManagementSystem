@@ -209,24 +209,24 @@ namespace HotelManagementSystem
         {
             List<string> tipovi = new List<string>();
             if (CheckBox_jednokrevetna.IsChecked == true) 
-                   tipovi.Add("'Jednokrevetna'");
+                   tipovi.Add("Jednokrevetna");
             if (CheckBox_dvokrevetna.IsChecked == true) 
-                tipovi.Add("'Dvokrevetna'");
+                tipovi.Add("Dvokrevetna");
             if (CheckBox_trokrevetna.IsChecked == true) 
-                tipovi.Add("'Trokrevetna'");
-            List<string> spratovi = new List<string>();
+                tipovi.Add("Trokrevetna");
+            List<int> spratovi = new List<int>();
             if (CheckBox_prizemlje.IsChecked == true) 
-                spratovi.Add("0");
+                spratovi.Add(0);
             if (CheckBox_prviSprat.IsChecked == true) 
-                spratovi.Add("1");
+                spratovi.Add(1);
             if (CheckBox_drugiSprat.IsChecked == true) 
-                spratovi.Add("2");
+                spratovi.Add(2);
             if (CheckBox_treciSprat.IsChecked == true) 
-                spratovi.Add("3");
+                spratovi.Add(3);
             if (CheckBox_cetvrtiSprat.IsChecked == true) 
-                spratovi.Add("4");
+                spratovi.Add(4);
             if (CheckBox_petiSprat.IsChecked == true) 
-                spratovi.Add("5");
+                spratovi.Add(5);
             var rezultati=_radnikSobeService.Pretrazi(tipovi,spratovi, null,null);
             DataGrid_sobeRadnik.ItemsSource = rezultati;
         }
