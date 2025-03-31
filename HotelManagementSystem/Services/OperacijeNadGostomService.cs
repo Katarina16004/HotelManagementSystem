@@ -124,7 +124,7 @@ namespace HotelManagementSystem.Services
             }
             return gosti;
         }
-        public bool ProveriIspravnost(Gost gost)
+        private bool ProveriIspravnost(Gost gost)
         {
             if (string.IsNullOrEmpty(gost.Ime) || string.IsNullOrEmpty(gost.Prezime) || string.IsNullOrEmpty(gost.Pol) ||
                 string.IsNullOrEmpty(gost.Telefon) || string.IsNullOrEmpty(gost.Drzavljanstvo))

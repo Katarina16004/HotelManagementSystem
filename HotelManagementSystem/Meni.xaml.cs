@@ -139,6 +139,7 @@ namespace HotelManagementSystem
 
             if(_operacijeNadGostomService.Dodaj(noviGost))
             {
+                DashboardData.BrojGostiju++;
                 OsveziDataGrid();
             }
         }
@@ -156,6 +157,7 @@ namespace HotelManagementSystem
             Gost noviGost = new Gost(ime, prezime, telefon, drzavljanstvo, pol, pasos, licnaKarta);
             if(_operacijeNadGostomService.Obrisi(noviGost))
             {
+                DashboardData.BrojGostiju--;
                 OsveziDataGrid();
             }
         }
@@ -201,6 +203,32 @@ namespace HotelManagementSystem
                         OsveziDataGrid();
                 }
             }
+        }
+
+        private void Button_pretraziSobu_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> tipovi = new List<string>();
+            if (CheckBox_jednokrevetna.IsChecked == true) 
+                   tipovi.Add("'Jednokrevetna'");
+            if (CheckBox_dvokrevetna.IsChecked == true) 
+                tipovi.Add("'Dvokrevetna'");
+            if (CheckBox_trokrevetna.IsChecked == true) 
+                tipovi.Add("'Trokrevetna'");
+            List<string> spratovi = new List<string>();
+            if (CheckBox_prizemlje.IsChecked == true) 
+                spratovi.Add("0");
+            if (CheckBox_prviSprat.IsChecked == true) 
+                spratovi.Add("1");
+            if (CheckBox_drugiSprat.IsChecked == true) 
+                spratovi.Add("2");
+            if (CheckBox_treciSprat.IsChecked == true) 
+                spratovi.Add("3");
+            if (CheckBox_cetvrtiSprat.IsChecked == true) 
+                spratovi.Add("4");
+            if (CheckBox_petiSprat.IsChecked == true) 
+                spratovi.Add("5");
+            var rezultati=_radnikSobeService.Pretrazi(tipovi,spratovi, null,null);
+            DataGrid_sobeRadnik.ItemsSource = rezultati;
         }
     }
 }

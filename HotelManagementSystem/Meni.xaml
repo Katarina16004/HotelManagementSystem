@@ -112,18 +112,10 @@
                         <TextBlock Grid.Row="1" Grid.Column="2" Text="Kraj rezervacije " VerticalAlignment="Center" />
                         <DatePicker x:Name="DatePicker_kraj" Grid.Row="1" Grid.Column="3" Width="150" HorizontalAlignment="Left" Margin="5" />
 
-                        <Button x:Name="Button_pretraziSobu" Grid.Row="2" Grid.ColumnSpan="4" HorizontalAlignment="Center" Style="{StaticResource ModernButton}">Pretraži</Button>
+                        <Button x:Name="Button_pretraziSobu" Grid.Row="2" Grid.ColumnSpan="4" HorizontalAlignment="Center" Style="{StaticResource ModernButton}" Click="Button_pretraziSobu_Click" >Pretraži</Button>
                     </Grid>
 
-                    <DataGrid Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Broj sobe" Width="*" />
-                            <DataGridTextColumn Header="Tip sobe" Width="*" />
-                            <DataGridTextColumn Header="Sprat"  Width="*" />
-                            <DataGridTextColumn Header="Dostupnost" Width="*" />
-                            <DataGridTextColumn Header="Cena po noći" Width="*" />
-                            <DataGridTextColumn Header="Napomena" Width="*" />
-                        </DataGrid.Columns>
+                    <DataGrid x:Name="DataGrid_sobeRadnik" Grid.Row="1" CanUserReorderColumns="False" CanUserResizeColumns="False" AutoGenerateColumns="True" Margin="10">
                     </DataGrid>
                 </Grid>
             </TabItem>
@@ -176,16 +168,6 @@
                     </Grid>
 
                     <DataGrid Name="DataGrid_gosti" Grid.Row="3" CanUserReorderColumns="False" CanUserResizeColumns="False" Margin="10" SelectionChanged="DataGrid_gosti_SelectionChanged">
-                        <!-- <DataGrid.Columns>
-                            <DataGridTextColumn Width="*" />
-                            <DataGridTextColumn Header="Ime"  Width="*" />
-                            <DataGridTextColumn Header="Prezime"  Width="*" />
-                            <DataGridTextColumn Header="Pol"  Width="*" />
-                            <DataGridTextColumn Header="Telefon"  Width="*" />
-                            <DataGridTextColumn Header="Državljanstvo"  Width="*" />
-                            <DataGridTextColumn Header="Pasoš"  Width="*" />
-                           <DataGridTextColumn Header="Lična karta"  Width="*" />
-                         </DataGrid.Columns> -->
                     </DataGrid>
                 </Grid>
             </TabItem>
