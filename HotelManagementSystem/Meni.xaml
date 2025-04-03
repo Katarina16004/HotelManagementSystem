@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HotelManagementSystem"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Meni" WindowState="Maximized">
     <Window.Resources>
@@ -182,7 +183,7 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                        <Button x:Name="Button_dodajRez" Content="Dodaj" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
+                        <Button x:Name="Button_dodajRez" Content="Dodaj" Width="100" Margin="5" Style="{StaticResource ModernButton}" Click="dodajRez" />
                         <Button x:Name="Button_pretraziRez" Content="Pretraži" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
                         <Button x:Name="Button_izmeniRez" Content="Izmeni" Width="100" Margin="5" Style="{StaticResource ModernButton}" />
                         <Button x:Name="Button_obrisiRez" Content="Obriši" Width="100" Margin="5" Style="{StaticResource ModernButton}" />

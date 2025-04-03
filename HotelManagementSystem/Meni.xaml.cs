@@ -3,6 +3,7 @@ using HotelManagementSystem.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -25,6 +26,7 @@ namespace HotelManagementSystem
         private DashboardService _dashboardService;
         private OperacijeNadGostomService _operacijeNadGostomService;
         private RadnikSobeService _radnikSobeService;
+        private RezervacijeService _rezervacijeService;
         public DashboardModel DashboardData { get; set; }
         public Meni(Osoblje korisnik)
         {
@@ -43,6 +45,7 @@ namespace HotelManagementSystem
 
             this.korisnik = korisnik;
 
+            _rezervacijeService = new RezervacijeService();
             _dashboardService = new DashboardService();
             DashboardData = new DashboardModel();
             _operacijeNadGostomService = new OperacijeNadGostomService();
@@ -233,6 +236,42 @@ namespace HotelManagementSystem
             var rezultati =_radnikSobeService.Pretrazi(tipovi,spratovi, pocetak,kraj);
             DataGrid_sobeRadnik.ItemsSource = rezultati;
         }
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.Source is TabControl tabControl && tabControl.SelectedItem is TabItem selectedTab)
+            {
+                if (selectedTab.Header.ToString() == "Sobe")
+                {
+                    _radnikSobeService.ResetTab(this);
+                }
+                else if (selectedTab.Header.ToString() == "Gosti")
+                {
+                    _operacijeNadGostomService.ResetTab(this);
+                }
+            }
+        }
+        private void dodajRez(object sender, EventArgs e)
+        {
+
+            int gostId = int.Parse(TextBox_idOsobe.Text);
+            int brojSobe = int.Parse(TextBox_idSobe.Text);
+
+            if (!DatePicker_pocetakRez.SelectedDate.HasValue || !DatePicker_krajRez.SelectedDate.HasValue)
+            {
+                MessageBox.Show("Molimo izaberite datume za rezervaciju.");
+                return;
+            }
+            DateTime datumPocetka = DatePicker_pocetakRez.SelectedDate.Value;
+            DateTime datumKraja = DatePicker_krajRez.SelectedDate.Value;
+            Rezervacije novaRezervacija = new Rezervacije(gostId, brojSobe, datumPocetka, datumKraja);
+
+            bool uspesno = _rezervacijeService.Dodaj(novaRezervacija);
+
+            if (uspesno)
+            {
+                MessageBox.Show("Rezervacija je uspešno dodata!");
+            }
+        }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -246,6 +285,28 @@ namespace HotelManagementSystem
                 {
                     _operacijeNadGostomService.ResetTab(this);
                 }
+            }
+        }
+        private void dodajRez(object sender, EventArgs e)
+        {
+            
+            int gostId  = int.Parse(TextBox_idOsobe.Text);
+            int brojSobe = int.Parse(TextBox_idSobe.Text);
+
+            if (!DatePicker_pocetakRez.SelectedDate.HasValue || !DatePicker_krajRez.SelectedDate.HasValue)
+            {
+                MessageBox.Show("Molimo izaberite datume za rezervaciju.");
+                return;
+            }
+            DateTime datumPocetka = DatePicker_pocetakRez.SelectedDate.Value;
+            DateTime datumKraja = DatePicker_krajRez.SelectedDate.Value;
+            Rezervacije novaRezervacija = new Rezervacije(gostId, brojSobe, datumPocetka, datumKraja);
+
+            bool uspesno = _rezervacijeService.Dodaj(novaRezervacija);
+
+            if (uspesno)
+            {
+                MessageBox.Show("Rezervacija je uspešno dodata!");
             }
         }
     }
