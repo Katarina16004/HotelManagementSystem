@@ -29,7 +29,7 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TabControl Grid.Row="1" TabStripPlacement="Left" >
+        <TabControl Grid.Row="1" TabStripPlacement="Left" SelectionChanged="TabControl_SelectionChanged" >
 
             <TabItem Header="Dashboard">
                 <Grid>

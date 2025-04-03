@@ -227,8 +227,26 @@ namespace HotelManagementSystem
                 spratovi.Add(4);
             if (CheckBox_petiSprat.IsChecked == true) 
                 spratovi.Add(5);
-            var rezultati=_radnikSobeService.Pretrazi(tipovi,spratovi, null,null);
+            DateTime? pocetak = DatePicker_pocetak.SelectedDate;
+            DateTime? kraj = DatePicker_kraj.SelectedDate;
+
+            var rezultati =_radnikSobeService.Pretrazi(tipovi,spratovi, pocetak,kraj);
             DataGrid_sobeRadnik.ItemsSource = rezultati;
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.Source is TabControl tabControl && tabControl.SelectedItem is TabItem selectedTab)
+            {
+                if (selectedTab.Header.ToString() == "Sobe")
+                {
+                    _radnikSobeService.ResetTab(this);
+                }
+                else if (selectedTab.Header.ToString() == "Gosti")
+                {
+                    _operacijeNadGostomService.ResetTab(this);
+                }
+            }
         }
     }
 }

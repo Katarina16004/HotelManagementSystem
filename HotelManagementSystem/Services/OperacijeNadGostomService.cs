@@ -308,5 +308,17 @@ namespace HotelManagementSystem.Services
                 return broj > 0; 
             }
         }
+        public void ResetTab(Meni meni)
+        {
+            meni.TextBox_ime.Text = "";
+            meni.TextBox_prezime.Text = "";
+            meni.TextBox_telefon.Text = "";
+            meni.TextBox_drzavljanstvo.Text = "";
+            meni.TextBox_pol.Text = "";
+            meni.TextBox_pasos.Text = "";
+            meni.TextBox_licna.Text = "";
+            meni.DataGrid_gosti.ItemsSource = null;
+
+        }
     }
 }

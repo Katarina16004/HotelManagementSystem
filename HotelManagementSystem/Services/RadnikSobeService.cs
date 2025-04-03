@@ -38,6 +38,14 @@ namespace HotelManagementSystem.Services
                         parameters.Add(new SqlParameter($"@sprat{i}", sprat[i]));
                     }
                 }
+                if (pocetak.HasValue && kraj.HasValue)
+                {
+                    uslovi.Add("(broj_sobe NOT IN (SELECT r.broj_sobe FROM rezervacija r " +
+                        "WHERE (@datum_pocetka <= r.datum_kraja_rez AND @datum_kraja >= r.datum_pocetka_rez)))");
+
+                    parameters.Add(new SqlParameter("@datum_pocetka", pocetak.Value));
+                    parameters.Add(new SqlParameter("@datum_kraja", kraj.Value));
+                }
 
                 string query = "SELECT * FROM soba";
                 if (uslovi.Count > 0)
@@ -101,6 +109,23 @@ namespace HotelManagementSystem.Services
                 }
             }
             return sobe;
+        }
+        public void ResetTab(Meni meni)
+        {
+            meni.CheckBox_jednokrevetna.IsChecked = false;
+            meni.CheckBox_dvokrevetna.IsChecked = false;
+            meni.CheckBox_trokrevetna.IsChecked = false;
+
+            meni.CheckBox_prizemlje.IsChecked = false;
+            meni.CheckBox_prviSprat.IsChecked = false;
+            meni.CheckBox_drugiSprat.IsChecked = false;
+            meni.CheckBox_treciSprat.IsChecked = false;
+            meni.CheckBox_cetvrtiSprat.IsChecked = false;
+            meni.CheckBox_petiSprat.IsChecked = false;
+
+            meni.DatePicker_pocetak.SelectedDate = null;
+            meni.DatePicker_kraj.SelectedDate = null;
+            meni.DataGrid_sobeRadnik.ItemsSource=null;
         }
     }
 }
